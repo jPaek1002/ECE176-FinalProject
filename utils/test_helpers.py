@@ -8,13 +8,6 @@ def build_model(args):
 	from models.ResNet import ResNetCifar as ResNet
 	from models.SSHead import ExtractorHead
 	print('Building model...')
-	if args.dataset[:7] == 'cifar10':
-		classes = 10
-	elif args.dataset == 'cifar7':
-		if not hasattr(args, 'modified') or args.modified:
-			classes = 7
-		else:
-			classes = 10
 
 	if args.group_norm == 0:
 		norm_layer = nn.BatchNorm2d
@@ -23,7 +16,7 @@ def build_model(args):
 			return nn.GroupNorm(args.group_norm, planes)
 		norm_layer = gn_helper
 
-	net = ResNet(args.depth, args.width, channels=3, classes=classes, norm_layer=norm_layer).cuda()
+	net = ResNet(args.depth, args.width, channels=3, classes=10, norm_layer=norm_layer).cuda()
 	if args.shared == 'none':
 		args.shared = None
 

@@ -11,8 +11,8 @@ from utils.prepare_dataset import *
 from utils.rotation import rotate_batch
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', default='cifar10')
-parser.add_argument('--dataroot', default='/home/yu/datasets/')
+parser.add_argument('--dataset', default='mnist')
+parser.add_argument('--dataroot', default='C:\\Users\\jaysp\\OneDrive\\Desktop\\Repos\\ECE176-FinalProject\\data')
 parser.add_argument('--shared', default=None)
 ########################################################################
 parser.add_argument('--depth', default=26, type=int)
@@ -30,14 +30,9 @@ parser.add_argument('--outf', default='.')
 
 args = parser.parse_args()
 import os
-if os.path.isdir('/data/yusun/datasets/'):
-    args.dataroot = '/data/yusun/datasets/'
-elif os.path.isdir('/home/smartbuy/ssda/datasets/'):
-    args.dataroot = '/home/smartbuy/ssda/datasets/'
-elif os.path.isdir('/home/yu/datasets/'):
-    args.dataroot = '/home/yu/datasets/'
-elif os.path.isdir('/home/yusun/datasets/'):
-    args.dataroot = '/home/yusun/datasets/'
+if os.path.isdir('/data'):
+    args.dataroot = '/data'
+
 
 my_makedir(args.outf)
 import torch.backends.cudnn as cudnn

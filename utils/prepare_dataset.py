@@ -19,17 +19,17 @@ common_corruptions = ['gaussian_noise', 'shot_noise', 'impulse_noise', 'defocus_
 					'brightness', 'contrast', 'elastic_transform', 'pixelate', 'jpeg_compression']
 
 def prepare_test_data(args):
-	if args.dataset == 'cifar10':
+	if args.dataset == 'mnist':
 		tesize = 10000
 		if not hasattr(args, 'corruption') or args.corruption == 'original':
 			print('Test on the original test set')
-			teset = torchvision.datasets.CIFAR10(root=args.dataroot,
+			teset = torchvision.datasets.MNIST(root=args.dataroot,
 												train=False, download=True, transform=te_transforms)
 		elif args.corruption in common_corruptions:
 			print('Test on %s level %d' %(args.corruption, args.level))
 			teset_raw = np.load(args.dataroot + '/CIFAR-10-C/%s.npy' %(args.corruption))
 			teset_raw = teset_raw[(args.level-1)*tesize: args.level*tesize]
-			teset = torchvision.datasets.CIFAR10(root=args.dataroot,
+			teset = torchvision.datasets.MNIST(root=args.dataroot,
 												train=False, download=True, transform=te_transforms)
 			teset.data = teset_raw
 
@@ -51,8 +51,8 @@ def prepare_test_data(args):
 
 def prepare_train_data(args):
 	print('Preparing data...')
-	if args.dataset == 'cifar10':
-		trset = torchvision.datasets.CIFAR10(root=args.dataroot,
+	if args.dataset == 'mnist':
+		trset = torchvision.datasets.MNIST(root=args.dataroot,
 										train=True, download=True, transform=tr_transforms)
 	else:
 		raise Exception('Dataset not found!')
