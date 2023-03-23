@@ -60,6 +60,6 @@ def prepare_train_data(args):
 	if not hasattr(args, 'workers'):
 		args.workers = 1
 	trloader = torch.utils.data.DataLoader(trset, batch_size=args.batch_size,
-											shuffle=True, num_workers=args.workers)
+											shuffle=True, num_workers=0)
 	return trset, trloader
 	
