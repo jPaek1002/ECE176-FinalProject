@@ -14,25 +14,21 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', default='mnist')
 parser.add_argument('--dataroot', default='C:\\Users\\jaysp\\OneDrive\\Desktop\\Repos\\ECE176-FinalProject\\data')
 parser.add_argument('--shared', default=None)
-########################################################################
 parser.add_argument('--depth', default=26, type=int)
 parser.add_argument('--width', default=1, type=int)
 parser.add_argument('--batch_size', default=128, type=int)
 parser.add_argument('--group_norm', default=0, type=int)
-########################################################################
 parser.add_argument('--lr', default=0.1, type=float)
 parser.add_argument('--nepoch', default=75, type=int)
 parser.add_argument('--milestone_1', default=50, type=int)
 parser.add_argument('--milestone_2', default=65, type=int)
 parser.add_argument('--rotation_type', default='rand')
-########################################################################
 parser.add_argument('--outf', default='.')
 
 args = parser.parse_args()
 import os
 if os.path.isdir('/data'):
     args.dataroot = '/data'
-
 
 my_makedir(args.outf)
 import torch.backends.cudnn as cudnn
@@ -49,12 +45,10 @@ criterion = nn.CrossEntropyLoss().cuda()
 
 all_err_cls = []
 all_err_ssh = []
-print('Running...')
-print('Error (%)\t\ttest\t\tself-supervised')
 for epoch in range(1, args.nepoch+1):
     net.train()
     ssh.train()
-
+    train_features, train_labels = next(iter(trloader))
     for batch_idx, (inputs, labels) in enumerate(trloader):
         optimizer.zero_grad()
         inputs_cls, labels_cls = inputs.cuda(), labels.cuda()

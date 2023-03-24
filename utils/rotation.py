@@ -2,7 +2,6 @@ import torch
 import torch.utils.data
 import numpy as np
 
-# Assumes that tensor is (nchannels, height, width)
 def tensor_rot_90(x):
     return x.flip(2).transpose(1, 2)
 
